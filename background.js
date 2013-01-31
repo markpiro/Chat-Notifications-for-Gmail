@@ -50,11 +50,16 @@ function getWinState(wid, callback) {
 function createNotification(name, msg) {  
     var notification = new Notification(name + ' says...', { icon: 'http://db.tt/3dshP0n8',  body: msg });
     notification.onshow = function() { nclose(function() { notification.close() }); }
-    notification.onclick = function() { chrome.tabs.update( gmtabid, {selected:true} ); notification.close(); chrome.tabs.sendMessage(gmtabid, {action: 'focus', name: name}); }
+    notification.onclick = function() {
+        chrome.tabs.update(gmtabid, {selected:true} );
+        notification.close();
+        chrome.tabs.sendMessage(gmtabid, {action: 'focus', name: name});
+        chrome.windows.update(winid, {focused: true});
+    }
 }
 
 function nclose(callback) {
-    setTimeout(callback, 5000);
+    setTimeout(callback, 6000);
 }
 
 function updateIcon() {
