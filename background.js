@@ -29,6 +29,16 @@ chrome.extension.onMessage.addListener(
 		if (request.action == 'icon') {
 			sendResponse(icon);
 		}
+		if (request.action == 'favicon') {
+			chrome.tabs.get(gmtabid, function(tab) {
+				getWinState(winid, function(wf) { 
+					if (!wf) {
+						console.log('favicon', tab);
+						tab.faviconUrl = 'https://dl.dropbox.com/u/2066680/gmchatnotify16.png';
+					}
+				});
+			});
+		}
 		if (request.action == 'chat') {
 			var name = request.name;
 			var msg = request.msg;
@@ -73,6 +83,14 @@ function updateIcon() {
 	}
 }
 
+chrome.tabs.onActivated.addListener(function(tab) {
+	getWinState(winid, function(wf) {
+		if (wf) {
+			tab.faviconUrl = 'https://mail.google.com/favicon.ico';
+		}
+	});
+});
+
 chrome.browserAction.onClicked.addListener(updateIcon);
 
 function reloadTab() {
@@ -91,3 +109,6 @@ function reloadTab() {
 }
 
 reloadTab();
+
+
+

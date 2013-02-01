@@ -28,7 +28,8 @@ window.onload = function() {
 var focusList = {};
 function handleChanges() {
     var ta = $('.Hz').next().find("textarea");
-    chrome.extension.sendMessage({action: 'icon'}, function(ic) {
+	chrome.extension.sendMessage({ action: 'favicon' });
+    chrome.extension.sendMessage({ action: 'icon' }, function(ic) {
 		if (ic) {
             var basenode = $('.Hz').next().find("div[role='chatMessage'][class='km']").last()
             var chat = basenode.text();
